@@ -1,111 +1,154 @@
-💰 SISTEMA DE CONTROLE FINANCEIRO PESSOAL — DJANGO DARK MODE
+# 💰 Sistema de Controle Financeiro Pessoal — Django Dark Mode
 
-Descrição Geral
-Sistema financeiro completo e automatizado desenvolvido em Django 5, com interface escura em tons de preto e amarelo.
-Permite gerenciar receitas, despesas, investimentos e contas a pagar, com totalizadores mensais e gerais, além de automação inteligente de contas recorrentes.
-O sistema cria automaticamente novas faturas recorrentes quando faltam 10 dias ou menos para o vencimento, sem necessidade de comandos manuais ou agendadores externos.
+Um sistema financeiro completo e automatizado, desenvolvido em **Django 5**, com design escuro elegante e funcionalidade profissional de **recorrência automática** de contas.
 
 ---
 
-FUNCIONALIDADES PRINCIPAIS
+## 🧠 Visão Geral
 
-• Cadastro de receitas, despesas e investimentos com data e valor.
-• Controle de contas a pagar com status de pagamento e opção de recorrência.
-• Criação automática de novas contas recorrentes diretamente na home.
-• Painel com totalizadores gerais e mensais: saldo líquido, patrimônio total, despesas, investimentos e contas pendentes.
-• Paginação automática nas listagens (20 registros por página).
-• Interface escura moderna e responsiva, baseada em preto e amarelo.
+O projeto oferece uma solução completa para controle financeiro pessoal.
+Permite o gerenciamento de **receitas**, **despesas**, **investimentos** e **contas a pagar**, com cálculos automáticos e um painel de visualização de totais gerais e mensais.
+
+A automação inteligente gera novas faturas recorrentes quando faltam **10 dias ou menos para o vencimento atual**, diretamente ao acessar a página inicial.
 
 ---
 
-ESTRUTURA DO PROJETO
+## ⚙️ Funcionalidades
 
-core/
-├── settings.py  (configurações principais do Django)
+| Módulo                        | Descrição                                       | Destaques                          |
+| ----------------------------- | ----------------------------------------------- | ---------------------------------- |
+| 📈 **Receitas**               | Cadastra entradas financeiras                   | Exibe totais mensais e gerais      |
+| 💸 **Despesas**               | Registra gastos e deduz do saldo                | Pode ser vinculada a investimentos |
+| 💼 **Investimentos**          | Gerencia aplicações e rendimentos               | Calcula patrimônio acumulado       |
+| 🧲 **Contas a Pagar**         | Controla vencimentos e status                   | Suporte a recorrência automática   |
+| 🔁 **Recorrência Automática** | Cria novas faturas com +30 dias                 | Totalmente autônoma, sem cron      |
+| 🌙 **Interface Dark Mode**    | Visual moderno, preto e amarelo                 | Responsiva e agradável             |
+| 📊 **Dashboard Inteligente**  | Exibe saldo líquido, investimentos e pendências | Cálculos automáticos e precisos    |
+
+---
+
+## 🧹 Estrutura do Projeto
+
+```
 economia/
-├── models.py  (modelos de Receita, Despesa, Investimento e ContasPagar)
-├── views.py  (lógica de dashboard e automação de recorrência)
-├── urls.py
-├── templates/
-│    ├── base.html
-│    ├── home.html
-│    ├── receitas.html
-│    ├── despesas.html
-│    ├── investimentos.html
-│    └── contas.html
-├── static/css/base.css
-├── management/commands/
-│    ├── seed_receitas.py
-│    ├── gerar_recorrentes.py
-│    └── outros scripts auxiliares
+ ├── models.py
+ ├── views.py
+ ├── urls.py
+ ├── templates/
+ │    ├── base.html
+ │    ├── home.html
+ │    ├── receitas.html
+ │    ├── despesas.html
+ │    ├── investimentos.html
+ │    └── contas.html
+ ├── static/css/base.css
+ ├── management/commands/
+ │    ├── seed_receitas.py
+ │    ├── gerar_recorrentes.py
+ │    └── outros scripts auxiliares
+```
 
 ---
 
-INSTALAÇÃO E EXECUÇÃO
+## 🖥️ Instalação
 
-1. Criar ambiente virtual:
-   python -m venv venv
+1️⃣ Clone o repositório:
 
-2. Ativar ambiente virtual:
-   • Linux/Mac:  source venv/bin/activate
-   • Windows:  venv\Scripts\activate
+```bash
+git clone https://github.com/seuusuario/financeiro-django.git
+cd financeiro-django
+```
 
-3. Instalar dependências:
-   pip install -r requirements.txt
+2️⃣ Crie o ambiente virtual:
 
-4. Aplicar migrações:
-   python manage.py migrate
+```bash
+python -m venv venv
+source venv/bin/activate   # Linux/Mac
+venv\Scripts\activate      # Windows
+```
 
-5. Executar o servidor local:
-   python manage.py runserver
+3️⃣ Instale as dependências:
 
-6. Acessar no navegador:
-   [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+```bash
+pip install -r requirements.txt
+```
+
+4️⃣ Aplique as migrações:
+
+```bash
+python manage.py migrate
+```
+
+5️⃣ Inicie o servidor:
+
+```bash
+python manage.py runserver
+```
+
+Acesse: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 
 ---
 
-AUTOMAÇÃO DE CONTAS RECORRENTES
+## 🔁 Automação Inteligente de Contas Recorrentes
 
-O sistema identifica automaticamente contas com o campo “recorrente” ativo.
-Se faltar 10 dias ou menos para o vencimento atual, ele gera uma nova conta com o mesmo valor, descrição e vencimento +30 dias.
-Essa lógica roda toda vez que o usuário acessa a página inicial (home), sem precisar de cron jobs ou comandos manuais.
+O sistema detecta contas com o campo `recorrente=True`.
+Se faltar **10 dias ou menos** para o vencimento, ele gera automaticamente uma nova conta com vencimento **+30 dias**, evitando duplicatas.
 
-Exemplo de log no terminal:
+Essa lógica roda **toda vez que o usuário acessa a home**, sem precisar de cron jobs externos.
+
+Exemplo de log:
+
+```
 [AUTO] 1 conta recorrente foi gerada automaticamente em 23/10/2025.
+```
 
 ---
 
-PALETA DE CORES DARK
+## 🎨 Paleta Dark Mode
 
-Preto: #0e0e0e
-Cinza Escuro: #1c1c1c
-Cinza Claro: #2a2a2a
-Branco: #f5f5f5
-Amarelo: #FFD700
-Vermelho: #FF5555
-
----
-
-ROTEIRO DE USO
-
-1. Cadastre receitas e despesas no menu superior.
-2. Cadastre contas a pagar, marcando “Recorrente” quando for uma despesa fixa.
-3. Acesse a página inicial para atualizar automaticamente as recorrentes.
-4. Monitore os totais no painel principal e nos módulos mensais.
+| Cor          | Função             | HEX       |
+| ------------ | ------------------ | --------- |
+| Preto        | Fundo principal    | `#0e0e0e` |
+| Cinza escuro | Blocos e cartões   | `#1c1c1c` |
+| Cinza claro  | Painéis e tabelas  | `#2a2a2a` |
+| Branco       | Texto e contraste  | `#f5f5f5` |
+| Amarelo      | Destaques e botões | `#FFD700` |
+| Vermelho     | Alertas e despesas | `#FF5555` |
 
 ---
 
-ROADMAP FUTURO
+## 🧮 Totalizadores Exibidos na Home
 
-• Adicionar botão “Gerar Próximo Mês” manual na interface.
-• Exibir mensagens visuais (toast) para novas faturas criadas.
-• Adicionar alertas de contas vencidas e exportação CSV/Excel.
-• Implementar gráficos interativos com Chart.js.
-• Sistema multiusuário com autenticação e perfis.
+* 💵 Total Líquido
+* 💰 Patrimônio Total
+* 📈 Total de Investimentos
+* 💸 Despesas Mensais
+* 🧲 Contas a Pagar e Pagas
+* 🗕️ Saldo do Mês Atual
 
 ---
 
-DESENVOLVIDO POR
-Wesurex
+## 🧾 Roteiro de Uso
+
+1. Cadastre receitas, despesas e investimentos.
+2. Adicione contas a pagar e marque “Recorrente” quando for uma conta fixa.
+3. Ao acessar a página inicial, o sistema criará automaticamente as faturas do próximo mês quando necessário.
+4. Monitore os totais no painel.
+
+---
+
+## 🚀 Roadmap Futuro
+
+* [ ] Botão manual “Gerar Próximo Mês”
+* [ ] Alertas visuais de novas recorrências
+* [ ] Exportação CSV/Excel
+* [ ] Gráficos interativos com Chart.js
+* [ ] Suporte multiusuário com autenticação
+
+---
+
+## 👨‍💻 Desenvolvido por
+
+**Wesurex**
 Desenvolvedor Full Stack • Especialista em automações
 Versão 1.0 — 2025
