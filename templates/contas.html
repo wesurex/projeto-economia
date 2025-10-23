@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block title %}Contas a Pagar{% endblock %}
+
+{% block content %}
+<h2>📋 Contas a Pagar</h2>
+
+<!-- === FORMULÁRIO === -->
+<form method="post" class="form-receita">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="descricao">Descrição</label>
+        <input type="text" id="descricao" name="descricao" required>
+    </div>
+
+    <div class="form-group">
+        <label for="valor">Valor (R$)</label>
+        <input type="number" id="valor" name="valor" step="0.01" required>
+    </div>
+
+    <div class="form-group">
+        <label for="vencimento">Vencimento</label>
+        <input type="date" id="vencimento" name="vencimento" required>
+    </div>
+
+    <button type="submit" class="btn btn-danger">Adicionar Conta</button>
+</form>
+
+<!-- === TOTALIZADORES === -->
+<div class="dashboard">
+    <div class="card destaque">
+        <h3>💰 Total do Mês</h3>
+        <p class="valor destaque">{{ total_contas_mes }}</p>
+    </div>
+    <div class="card destaque">
+        <h3>✅ Pagas</h3>
+        <p class="valor valor-positivo">{{ total_pagas }}</p>
+    </div>
+    <div class="card destaque">
+        <h3>❌ Pendentes</h3>
+        <p class="valor valor-negativo">{{ total_pendentes }}</p>
+    </div>
+</div>
+
+<!-- === LISTAGEM === -->
+<div class="lista-receitas">
+    <h3>🗓️ Contas de {{ mes }}/{{ ano }}</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Vencimento</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in contas %}
+            <tr>
+                <td>{{ c.descricao }}</td>
+                <td>R$ {{ c.valor }}</td>
+                <td>{{ c.vencimento|date:"d/m/Y" }}</td>
+                <td>
+                    {% if c.pago %}
+                        <span class="valor-positivo">Pago</span>
+                    {% else %}
+                        <span class="valor-negativo">Pendente</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4">Nenhuma conta cadastrada neste mês.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- === PAGINAÇÃO === -->
+    {% if contas.paginator.num_pages > 1 %}
+    <div class="paginacao">
+        {% if contas.has_previous %}
+            <a href="?page={{ contas.previous_page_number }}" class="btn-pag">&laquo; Anterior</a>
+        {% else %}
+            <span class="btn-pag desativado">&laquo; Anterior</span>
+        {% endif %}
+
+        {% for num in contas.paginator.page_range %}
+            {% if contas.number == num %}
+                <span class="pagina-ativa">{{ num }}</span>
+            {% else %}
+                <a href="?page={{ num }}" class="pagina-link">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if contas.has_next %}
+            <a href="?page={{ contas.next_page_number }}" class="btn-pag">Próxima &raquo;</a>
+        {% else %}
+            <span class="btn-pag desativado">Próxima &raquo;</span>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

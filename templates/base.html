@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Finanças{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <header>
+        <h1>💰 Controle Financeiro</h1>
+        <nav>
+            <a href="{% url 'home' %}">Início</a>
+            <a href="{% url 'receitas' %}">Receitas</a>
+            <a href="{% url 'despesas' %}">Despesas</a>
+            <a href="{% url 'investimentos' %}">Investimentos</a>
+            <a href="{% url 'contas' %}">Contas a Pagar</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Conteúdo das páginas filhas -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>© 2025 - Sistema Financeiro Pessoal | Wesley Reinert da Silva</p>
+    </footer>
+</body>
+</html>

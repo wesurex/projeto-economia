@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block title %}Receitas{% endblock %}
+
+{% block content %}
+<h2>📈 Minhas Receitas</h2>
+
+<form method="post" class="form-receita">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="descricao">Descrição</label>
+        <input type="text" id="descricao" name="descricao" required>
+    </div>
+
+    <div class="form-group">
+        <label for="valor">Valor (R$)</label>
+        <input type="number" id="valor" name="valor" step="0.01" required>
+    </div>
+
+    <div class="form-group">
+        <label for="data">Data</label>
+        <input type="date" id="data" name="data" required>
+    </div>
+
+    <button type="submit" class="btn">Adicionar Receita</button>
+</form>
+
+<div class="dashboard">
+    <div class="card destaque">
+        <h3>💵 Total do Mês</h3>
+        <p class="valor destaque">{{ total_receitas }}</p>
+    </div>
+    <div class="card destaque">
+        <h3>💰 Total Geral</h3>
+        <p class="valor destaque">{{ total_geral }}</p>
+    </div>
+</div>
+
+<!-- === LISTAGEM === -->
+<div class="lista-receitas">
+    <h3>📅 Receitas de {{ mes }}/{{ ano }}</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in receitas %}
+            <tr>
+                <td>{{ r.descricao }}</td>
+                <td class="valor-positivo">R$ {{ r.valor }}</td>
+                <td>{{ r.data|date:"d/m/Y" }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="3">Nenhuma receita cadastrada neste mês.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- === PAGINAÇÃO === -->
+    {% if receitas.paginator.num_pages > 1 %}
+    <div class="paginacao">
+        {% if receitas.has_previous %}
+            <a href="?page={{ receitas.previous_page_number }}" class="btn-pag">&laquo; Anterior</a>
+        {% else %}
+            <span class="btn-pag desativado">&laquo; Anterior</span>
+        {% endif %}
+
+        {% for num in receitas.paginator.page_range %}
+            {% if receitas.number == num %}
+                <span class="pagina-ativa">{{ num }}</span>
+            {% else %}
+                <a href="?page={{ num }}" class="pagina-link">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if receitas.has_next %}
+            <a href="?page={{ receitas.next_page_number }}" class="btn-pag">Próxima &raquo;</a>
+        {% else %}
+            <span class="btn-pag desativado">Próxima &raquo;</span>
+        {% endif %}
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

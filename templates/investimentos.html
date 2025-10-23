@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block title %}Investimentos{% endblock %}
+
+{% block content %}
+<h2>📈 Meus Investimentos</h2>
+
+<!-- === FORMULÁRIO === -->
+<form method="post" class="form-receita">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="descricao">Descrição</label>
+        <input type="text" id="descricao" name="descricao" required placeholder="Ex: CDB Banco X, Tesouro Selic, Poupança...">
+    </div>
+
+    <div class="form-group">
+        <label for="valor">Valor (R$)</label>
+        <input type="number" id="valor" name="valor" step="0.01" required>
+    </div>
+
+    <div class="form-group">
+        <label for="data">Data</label>
+        <input type="date" id="data" name="data" required>
+    </div>
+
+    <button type="submit" class="btn">Adicionar Investimento</button>
+</form>
+
+<!-- === TOTALIZADORES === -->
+<div class="dashboard">
+    <div class="card destaque">
+        <h3>📅 Total do Mês</h3>
+        <p class="valor alerta">{{ total_invest_mes }}</p>
+    </div>
+    <div class="card destaque">
+        <h3>💰 Total Investido (Geral)</h3>
+        <p class="valor alerta">{{ total_invest_geral }}</p>
+    </div>
+</div>
+
+<!-- === LISTAGEM === -->
+<div class="lista-receitas">
+    <h3>💼 Investimentos de {{ mes }}/{{ ano }}</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for inv in investimentos %}
+            <tr>
+                <td>{{ inv.descricao }}</td>
+                <td class="alerta">R$ {{ inv.valor }}</td>
+                <td>{{ inv.data|date:"d/m/Y" }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="3">Nenhum investimento cadastrado neste mês.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- === PAGINAÇÃO === -->
+    {% if investimentos.paginator.num_pages > 1 %}
+    <div class="paginacao">
+        {% if investimentos.has_previous %}
+            <a href="?page={{ investimentos.previous_page_number }}" class="btn-pag">&laquo; Anterior</a>
+        {% else %}
+            <span class="btn-pag desativado">&laquo; Anterior</span>
+        {% endif %}
+
+        {% for num in investimentos.paginator.page_range %}
+            {% if investimentos.number == num %}
+                <span class="pagina-ativa">{{ num }}</span>
+            {% else %}
+                <a href="?page={{ num }}" class="pagina-link">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if investimentos.has_next %}
+            <a href="?page={{ investimentos.next_page_number }}" class="btn-pag">Próxima &raquo;</a>
+        {% else %}
+            <span class="btn-pag desativado">Próxima &raquo;</span>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

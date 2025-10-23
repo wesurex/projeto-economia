@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Painel Financeiro{% endblock %}
+
+{% block content %}
+<h2>📊 Painel Financeiro</h2>
+
+<!-- === TOTALIZADORES PRINCIPAIS === -->
+<div class="dashboard">
+  <div class="card destaque">
+      <h3>💵 Total Líquido</h3>
+      <p class="valor destaque">{{ total_liquido }}</p>
+  </div>
+
+  <div class="card destaque">
+      <h3>📈 Total Investido</h3>
+      <p class="valor destaque">{{ total_investimentos }}</p>
+  </div>
+
+  <div class="card super-destaque">
+      <h3>💰 Patrimônio Total</h3>
+      <p class="valor destaque">{{ patrimonio_total }}</p>
+  </div>
+</div>
+
+<!-- === RESUMO MENSAL === -->
+<div class="dashboard">
+  <div class="card">
+      <h3>📅 Mês Atual ({{ mes }}/{{ ano }})</h3>
+      <p>Receitas: <span class="valor-positivo">{{ total_receitas_mes }}</span></p>
+      <p>Despesas: <span class="valor-negativo">{{ total_despesas_mes }}</span></p>
+      <p>Investimentos: <span class="alerta">{{ total_investimentos_mes }}</span></p>
+      <hr>
+      <p><strong>Saldo do Mês:</strong> {{ saldo_mes }}</p>
+  </div>
+
+  <div class="card">
+      <h3>📋 Contas a Pagar</h3>
+      <p>Total: {{ total_contas }}</p>
+      <p>Pagas: <span class="valor-positivo">{{ total_contas_pagas }}</span></p>
+      <p>Pendentes: <span class="valor-negativo">{{ total_contas_pendentes }}</span></p>
+      <hr>
+      <p><strong>Faltam pagar:</strong> {{ qtd_pendentes }} contas</p>
+      <p><strong>Valor pendente este mês:</strong> {{ total_contas_mes_pendentes }}</p>
+  </div>
+</div>
+{% endblock %}

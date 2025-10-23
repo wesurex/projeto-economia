@@ -1,0 +1,370 @@
+/* ---------- Paleta ---------- */
+:root {
+    --preto: #0e0e0e;
+    --cinza-escuro: #1a1a1a;
+    --cinza-claro: #2b2b2b;
+    --branco: #f5f5f5;
+    --amarelo: #FFD700;
+    --amarelo-escuro: #bfa300;
+    --vermelho: #ff4d4d;
+}
+
+/* ---------- Layout base ---------- */
+body {
+    background-color: var(--preto);
+    color: var(--branco);
+    font-family: "Inter", sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ---------- Header ---------- */
+header {
+    background-color: var(--cinza-escuro);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--amarelo);
+    box-shadow: 0 2px 10px rgba(255, 215, 0, 0.1);
+}
+
+header h1 {
+    color: var(--amarelo);
+    margin: 0;
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+}
+
+/* ---------- Navegação ---------- */
+nav a {
+    color: var(--branco);
+    text-decoration: none;
+    margin-left: 1.2rem;
+    transition: color 0.3s, border-bottom 0.3s;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 4px;
+}
+
+nav a:hover {
+    color: var(--amarelo);
+    border-bottom: 2px solid var(--amarelo);
+}
+
+/* ---------- Conteúdo ---------- */
+main {
+    flex: 1;
+    padding: 2rem;
+    background-color: var(--cinza-claro);
+}
+
+/* ---------- Cards e blocos ---------- */
+.card {
+    background-color: var(--cinza-escuro);
+    border: 1px solid var(--amarelo-escuro);
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.05);
+}
+
+.card h2 {
+    color: var(--amarelo);
+    margin-bottom: 0.5rem;
+}
+
+/* ---------- Cores semânticas ---------- */
+.valor-positivo {
+    color: var(--amarelo);
+    font-weight: bold;
+}
+
+.valor-negativo {
+    color: var(--vermelho);
+    font-weight: bold;
+}
+
+.alerta {
+    color: var(--amarelo-escuro);
+}
+
+/* ---------- Botões ---------- */
+button,
+.btn {
+    background-color: var(--amarelo);
+    color: var(--preto);
+    font-weight: bold;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover,
+.btn:hover {
+    background-color: var(--amarelo-escuro);
+}
+
+/* ---------- Footer ---------- */
+footer {
+    background-color: var(--cinza-escuro);
+    color: var(--branco);
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    border-top: 1px solid var(--amarelo);
+}
+
+/* ---------- Responsividade ---------- */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav a {
+        display: inline-block;
+        margin: 0.5rem;
+    }
+}
+
+/* ---------- Dashboard ---------- */
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.card {
+    background-color: var(--cinza-escuro);
+    border: 1px solid var(--amarelo-escuro);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+}
+
+.card h3 {
+    color: var(--amarelo);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.card p.valor {
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+.card.destaque {
+    background: linear-gradient(135deg, var(--amarelo) 0%, #bfa300 100%);
+    color: var(--preto);
+    font-weight: bold;
+}
+
+.card.destaque h3 {
+    color: var(--preto);
+}
+
+.card.destaque .valor {
+    font-size: 1.8rem;
+}
+
+.filtro-mes {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: var(--cinza-escuro);
+    border: 1px solid var(--amarelo-escuro);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.filtro-mes label {
+    font-weight: bold;
+    color: var(--amarelo);
+}
+
+.filtro-mes select,
+.filtro-mes input {
+    background-color: var(--preto);
+    color: var(--branco);
+    border: 1px solid var(--amarelo-escuro);
+    border-radius: 6px;
+    padding: 0.4rem 0.6rem;
+    font-weight: bold;
+    outline: none;
+}
+
+.filtro-mes select:focus,
+.filtro-mes input:focus {
+    border-color: var(--amarelo);
+}
+
+.card.contas {
+    border-left: 4px solid var(--vermelho);
+}
+
+.card.contas h3 {
+    color: var(--vermelho);
+}
+
+.card.contas p strong {
+    color: var(--amarelo);
+}
+
+/* ---------- Formulário ---------- */
+.form-receita {
+    background-color: var(--cinza-escuro);
+    padding: 1.5rem;
+    border: 1px solid var(--amarelo-escuro);
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+.form-receita .form-group {
+    margin-bottom: 1rem;
+}
+
+.form-receita label {
+    display: block;
+    color: var(--amarelo);
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+}
+
+.form-receita input {
+    width: 100%;
+    padding: 0.6rem;
+    background-color: var(--preto);
+    color: var(--branco);
+    border: 1px solid var(--amarelo-escuro);
+    border-radius: 6px;
+    outline: none;
+}
+
+.form-receita input:focus {
+    border-color: var(--amarelo);
+}
+
+/* ---------- Tabela ---------- */
+.lista-receitas table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--cinza-escuro);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.lista-receitas th, .lista-receitas td {
+    padding: 0.8rem 1rem;
+    text-align: left;
+}
+
+.lista-receitas th {
+    background-color: var(--amarelo-escuro);
+    color: var(--preto);
+}
+
+.lista-receitas tr:nth-child(even) {
+    background-color: var(--cinza-claro);
+}
+
+.lista-receitas tr:hover {
+    background-color: rgba(255, 215, 0, 0.1);
+}
+
+.lista-receitas td.valor-positivo {
+    color: var(--amarelo);
+    font-weight: bold;
+}
+
+/* ---------- Paginação ---------- */
+.paginacao {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.btn-pag, .pagina-link, .pagina-ativa {
+    padding: 0.5rem 0.9rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-pag, .pagina-link {
+    background-color: var(--cinza-escuro);
+    color: var(--amarelo);
+    border: 1px solid var(--amarelo-escuro);
+}
+
+.btn-pag:hover, .pagina-link:hover {
+    background-color: var(--amarelo);
+    color: var(--preto);
+}
+
+.desativado {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.pagina-ativa {
+    background-color: var(--amarelo);
+    color: var(--preto);
+    border: 1px solid var(--amarelo-escuro);
+}
+
+/* ---------- Estilos para Despesas ---------- */
+.btn-danger {
+    background-color: var(--vermelho);
+    color: var(--branco);
+}
+
+.btn-danger:hover {
+    background-color: #ff7777;
+    color: var(--preto);
+}
+
+.valor-negativo {
+    color: var(--vermelho);
+    font-weight: bold;
+}
+
+select {
+    background-color: var(--preto);
+    color: var(--branco);
+    border: 1px solid var(--amarelo-escuro);
+    border-radius: 6px;
+    padding: 0.4rem;
+}
+
+.alerta {
+    color: var(--preto);
+    font-weight: bold;
+}
+
+td span.valor-positivo {
+    color: var(--verde);
+    font-weight: bold;
+}
+
+td span.valor-negativo {
+    color: var(--vermelho);
+    font-weight: bold;
+}

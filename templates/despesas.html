@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block title %}Despesas{% endblock %}
+
+{% block content %}
+<h2>💸 Minhas Despesas</h2>
+
+<!-- === FORMULÁRIO === -->
+<form method="post" class="form-receita">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="descricao">Descrição</label>
+        <input type="text" id="descricao" name="descricao" required>
+    </div>
+
+    <div class="form-group">
+        <label for="valor">Valor (R$)</label>
+        <input type="number" id="valor" name="valor" step="0.01" required>
+    </div>
+
+    <div class="form-group">
+        <label for="data">Data</label>
+        <input type="date" id="data" name="data" required>
+    </div>
+
+    <div class="form-group">
+        <label for="investimento">Investimento (opcional)</label>
+        <select id="investimento" name="investimento">
+            <option value="">-- Nenhum --</option>
+            {% for inv in investimentos %}
+            <option value="{{ inv.id }}">{{ inv.descricao }} (R$ {{ inv.valor }})</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-danger">Adicionar Despesa</button>
+</form>
+
+<!-- === TOTALIZADORES === -->
+<div class="dashboard">
+    <div class="card destaque">
+        <h3>📅 Total do Mês</h3>
+        <p class="valor valor-negativo">{{ total_despesas_mes }}</p>
+    </div>
+    <div class="card destaque">
+        <h3>💰 Total Geral</h3>
+        <p class="valor valor-negativo">{{ total_despesas_geral }}</p>
+    </div>
+</div>
+
+<!-- === LISTAGEM === -->
+<div class="lista-receitas">
+    <h3>📆 Despesas de {{ mes }}/{{ ano }}</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Data</th>
+                <th>Investimento</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in despesas %}
+            <tr>
+                <td>{{ d.descricao }}</td>
+                <td class="valor-negativo">R$ {{ d.valor }}</td>
+                <td>{{ d.data|date:"d/m/Y" }}</td>
+                <td>{% if d.investimento %}{{ d.investimento.descricao }}{% else %}-{% endif %}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4">Nenhuma despesa cadastrada neste mês.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- === PAGINAÇÃO === -->
+    {% if despesas.paginator.num_pages > 1 %}
+    <div class="paginacao">
+        {% if despesas.has_previous %}
+            <a href="?page={{ despesas.previous_page_number }}" class="btn-pag">&laquo; Anterior</a>
+        {% else %}
+            <span class="btn-pag desativado">&laquo; Anterior</span>
+        {% endif %}
+
+        {% for num in despesas.paginator.page_range %}
+            {% if despesas.number == num %}
+                <span class="pagina-ativa">{{ num }}</span>
+            {% else %}
+                <a href="?page={{ num }}" class="pagina-link">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if despesas.has_next %}
+            <a href="?page={{ despesas.next_page_number }}" class="btn-pag">Próxima &raquo;</a>
+        {% else %}
+            <span class="btn-pag desativado">Próxima &raquo;</span>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
